@@ -1,13 +1,3 @@
-{
-	"FileVersion": 3,
-	"EngineAssociation": "4.25",
-	"Category": "",
-	"Description": "",
-	"Modules": [
-		{
-			"Name": "SimpleShooter",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
-	]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:000ba6a44abe9bd5b03882f80bb3fb20d4630c8d2796743044e9d45d4ef456b2
+size 205
