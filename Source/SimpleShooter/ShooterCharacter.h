@@ -34,6 +34,8 @@ private:
 	void LookUpRate(float AxisValue);
 	void LookRightRate(float AxisValue);
 
+	void Shoot();
+
 	UPROPERTY(EditAnywhere)
 	float PitchRate{ 30 }; //rotation rate for looking up/down
 	UPROPERTY(EditAnywhere)
