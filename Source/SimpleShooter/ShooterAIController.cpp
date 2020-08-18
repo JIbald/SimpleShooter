@@ -8,6 +8,22 @@ void AShooterAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
+}
+
+void AShooterAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	SetFocus(PlayerPawn, EAIFocusPriority::Gameplay);
+	
+	if (LineOfSightTo(PlayerPawn))
+	{
+		SetFocus(PlayerPawn, EAIFocusPriority::Gameplay); //EAIFocusPriority defaults used
+		MoveToActor(PlayerPawn, AcceptanceRadius, true);
+	}
+	else
+	{
+		ClearFocus(EAIFocusPriority::Gameplay);
+		StopMovement();
+	}
 }
