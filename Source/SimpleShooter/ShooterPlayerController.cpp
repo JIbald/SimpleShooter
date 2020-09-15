@@ -9,15 +9,16 @@ void AShooterPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UUserWidget* Crosshair = CreateWidget(this, CrosshairClass);
-	if (Crosshair != nullptr)
+	HUD = CreateWidget(this, HUDClass);
+	if (HUD != nullptr)
 	{
-		Crosshair->AddToViewport();
+		HUD->AddToViewport();
 	}
 }
 
 void AShooterPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
 {
+	HUD->RemoveFromViewport();
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
 	UE_LOG(LogTemp, Warning, TEXT("Game has ended."));
 

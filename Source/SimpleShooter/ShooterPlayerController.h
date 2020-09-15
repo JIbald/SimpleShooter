@@ -22,7 +22,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class UUserWidget> CrosshairClass;
+	TSubclassOf<class UUserWidget> HUDClass;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UUserWidget> WinScreenClass;
@@ -34,4 +34,7 @@ private:
 	float RestartDelay = 5.f;
 
 	FTimerHandle RestartTimer;
+
+	UPROPERTY(EditAnywhere)
+	UUserWidget* HUD;
 };
