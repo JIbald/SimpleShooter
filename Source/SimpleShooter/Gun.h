@@ -17,6 +17,11 @@ public:
 
 	void PullTrigger();
 
+	UFUNCTION(BlueprintPure)
+	bool IsEmpty() const;
+
+	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -24,6 +29,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	int32 GetAmmo() const;
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -49,6 +56,12 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float Damage{ 25 };
+
+	UPROPERTY(EditAnywhere)
+	int MaxAmmo{ 40 };
+
+	UPROPERTY(VisibleAnywhere)
+	int Ammo;
 
 	bool  GunTrace(FHitResult& Hit, FVector& ShotDirection);
 

@@ -24,6 +24,7 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Ammo = MaxAmmo;
 }
 
 // Called every frame
@@ -35,24 +36,34 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
-	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
-	UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
-
-	FHitResult Hit;
-	FVector ShotDirection;
-	bool bSuccess = GunTrace(Hit, ShotDirection);
-	if (bSuccess)
+	if (!IsEmpty() )
 	{
+		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
+		UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
 		
-		//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
-		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), ImpactSound, Hit.Location);
-		AActor* HitActor{ Hit.GetActor() };
-		if (HitActor != nullptr)
+		--Ammo;
+		UE_LOG(LogTemp, Warning, TEXT("Ammo left: %i"), Ammo);
+
+		FHitResult Hit;
+		FVector ShotDirection;
+		bool bSuccess = GunTrace(Hit, ShotDirection);
+		if (bSuccess)
 		{
-			FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
-			HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), this);
+		
+			//DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Red, true);
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.Location, ShotDirection.Rotation());
+			UGameplayStatics::SpawnSoundAtLocation(GetWorld(), ImpactSound, Hit.Location);
+			AActor* HitActor{ Hit.GetActor() };
+			if (HitActor != nullptr)
+			{
+				FPointDamageEvent DamageEvent(Damage, Hit, ShotDirection, nullptr);
+				HitActor->TakeDamage(Damage, DamageEvent, GetOwnerController(), this);
+			}
 		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No Ammo left") );
 	}
 
 }
@@ -86,3 +97,21 @@ AController* AGun::GetOwnerController() const
 	}
 	return OwnerPawn->GetController();
 }
+
+bool AGun::IsEmpty() const
+{
+	if (Ammo <= 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int32 AGun::GetAmmo() const
+{
+	return Ammo;
+}
+
