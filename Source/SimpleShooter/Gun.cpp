@@ -24,7 +24,8 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	Ammo = MaxAmmo;
+	Bullets = MagCapacity;
+	AmmoBag = MaxAmmo;
 }
 
 // Called every frame
@@ -41,8 +42,8 @@ void AGun::PullTrigger()
 		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("MuzzleFlashSocket"));
 		UGameplayStatics::SpawnSoundAttached(MuzzleSound, Mesh, TEXT("MuzzleFlashSocket"));
 		
-		--Ammo;
-		UE_LOG(LogTemp, Warning, TEXT("Ammo left: %i"), Ammo);
+		--Bullets;
+		UE_LOG(LogTemp, Warning, TEXT("Bullets in Mag left: %i"), Bullets);
 
 		FHitResult Hit;
 		FVector ShotDirection;
@@ -100,7 +101,7 @@ AController* AGun::GetOwnerController() const
 
 bool AGun::IsEmpty() const
 {
-	if (Ammo <= 0)
+	if (Bullets <= 0)
 	{
 		return true;
 	}
@@ -110,8 +111,29 @@ bool AGun::IsEmpty() const
 	}
 }
 
-int32 AGun::GetAmmo() const
+int32 AGun::GetBullets() const
 {
-	return Ammo;
+	return Bullets;
 }
 
+int32 AGun::GetAmmoBag() const
+{
+	return AmmoBag;
+}
+
+void AGun::ReloadGunMag()
+{
+	int Difference{ MagCapacity - Bullets };
+
+	if (Difference <= AmmoBag)
+	{
+		Bullets += Difference;
+		AmmoBag -= Difference;
+	}
+	else if ( Difference > AmmoBag )
+	{
+		Bullets += AmmoBag;
+		AmmoBag = 0;
+	}
+
+}

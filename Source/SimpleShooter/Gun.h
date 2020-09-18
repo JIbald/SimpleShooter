@@ -30,7 +30,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	int32 GetAmmo() const;
+	int32 GetBullets() const;
+
+	int32 GetAmmoBag() const;
+
+	void ReloadGunMag();
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -58,10 +62,16 @@ private:
 	float Damage{ 25 };
 
 	UPROPERTY(EditAnywhere)
-	int MaxAmmo{ 40 };
+	int MaxAmmo{ 60 };
+
+	UPROPERTY(EditAnywhere)
+	int MagCapacity{ 20 };
 
 	UPROPERTY(VisibleAnywhere)
-	int Ammo;
+	int AmmoBag;
+
+	UPROPERTY(VisibleAnywhere)
+	int Bullets;
 
 	bool  GunTrace(FHitResult& Hit, FVector& ShotDirection);
 

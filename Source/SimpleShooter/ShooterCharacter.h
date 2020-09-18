@@ -29,7 +29,10 @@ public:
 	float GetHealthPercent() const;
 
 	UFUNCTION(BlueprintPure)
-	int32 GetAmmoCount() const;
+	int32 GetBulletCount() const;
+
+	UFUNCTION(BlueprintPure)
+	int32 GetAmmoBagCount() const;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -40,6 +43,8 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	void Shoot();
+
+	void ReloadGun();
 
 private:
 	void MoveForward(float AxisValue);
