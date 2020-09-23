@@ -137,3 +137,15 @@ void AGun::ReloadGunMag()
 	}
 
 }
+
+void AGun::AddAmmo(int32 AmmoAmount)
+{
+	if (AmmoBag + AmmoAmount >= MaxAmmo)
+	{
+		AmmoBag = MaxAmmo;
+	}
+	else
+	{
+		AmmoBag += AmmoAmount;
+	}
+}

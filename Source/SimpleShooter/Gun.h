@@ -20,7 +20,7 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsEmpty() const;
 
-	
+	void AddAmmo(int32 AmmoAmount);
 
 protected:
 	// Called when the game starts or when spawned

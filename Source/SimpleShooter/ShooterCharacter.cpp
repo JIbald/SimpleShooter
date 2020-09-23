@@ -133,3 +133,10 @@ int32 AShooterCharacter::GetAmmoBagCount() const
 {
 	return Gun->GetAmmoBag();
 }
+
+// Collecting Items Functions
+
+//void CollectAmmoBonus()
+//{
+//	Gun->AddAmmo(AmmoBonus);
+//}
